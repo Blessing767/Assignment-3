@@ -1,0 +1,386 @@
+header {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px; /* Adjust size if needed */
+    height: 100px;
+    border-radius: 50%; /* Makes the logo circular */
+    object-fit: cover; /* Ensures the image fits well within the circular shape */
+    border: 2px solid white; /* Optional: Adds a border around the logo */
+    display: block;
+    margin: 0 auto; /* Centers the logo */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: red;
+}
+
+/* Global Styles */
+body {
+    background-color: black; /* Set entire background to black */
+    color: white; /* Ensure text is visible on the black background */
+    font-family: Arial, sans-serif; /* Maintain consistency across pages */
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    background-color: black; /* Ensure individual sections maintain black */
+    padding: 20px;
+    min-height: 80vh; /* Ensure the main content covers the viewport */
+}
+
+h1, h2, h3, p, label {
+    color: white; /* Keep headings and text visible on black */
+}
+
+/* Global Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body covers the full viewport height */
+    margin: 0;
+    background-color: black; /* Black background */
+    color: white;
+}
+
+main {
+    flex: 1; /* Fills the remaining space between header and footer */
+    padding: 20px;
+    text-align: center;
+    background-color: black;
+}
+
+/* Header Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border-bottom: 1px solid #555;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.nav-links a:hover {
+    color: red;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border-top: 1px solid #555;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+/* Dashboard Styles */
+.dashboard-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black; /* Black background for consistency */
+}
+
+/* Add New Trip Button */
+.add-trip-button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.add-trip-button:hover {
+    background-color: #ff4d4d;
+}
+
+/* Trip List Grid */
+.trip-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Individual Trip Card */
+.trip-card {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.trip-card h3 {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.trip-card p {
+    margin: 5px 0;
+}
+
+.trip-card:hover {
+    transform: scale(1.05);
+}
+
+/* Trip Actions (Buttons) */
+.trip-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.trip-actions a,
+.trip-actions button {
+    padding: 8px 15px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.trip-actions .btn-secondary {
+    background-color: red;
+    color: white;
+}
+
+.trip-actions .btn-secondary:hover {
+    background-color: #ff4d4d;
+}
+
+.trip-actions .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+
+.trip-actions .btn-danger:hover {
+    background-color: #bd2130;
+}
+
+/* No Trips Message */
+.no-trips-message {
+    font-size: 18px;
+    color: #ccc;
+    text-align: center;
+}
+/* Buttons */
+.btn-primary {
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #ff4d4d;
+}
+
+.btn-secondary {
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.btn-secondary:hover {
+    background-color: #ff4d4d;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
+}
+
+/* No trips message */
+.no-trips-message {
+    text-align: center;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.home-container {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: black;
+    color: white;
+}
+
+.home-container .intro {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-title .logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.logo-title h1 {
+    color: red;
+    margin: 10px 0;
+    font-size: 36px;
+}
+
+.cta-buttons {
+    margin-top: 20px;
+}
+
+.cta-buttons a {
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: red;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #ff4d4d;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: black;
+}
+
+.btn-secondary:hover {
+    background-color: #ddd;
+}
+
+/* Contact Page Styles */
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.contact-container h2 {
+    color: red;
+    margin-bottom: 20px;
+}
+
+.contact-container p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form label {
+    font-size: 14px;
+    color: white;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+}
+
+.contact-form button {
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #ff4d4d;
+}
+
+

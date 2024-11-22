@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<main>
+    <section class="trip-details-container">
+        <!-- Trip Details -->
+        <h2><%= trip.title %></h2>
+        <div class="trip-details">
+            <p><strong>Destination:</strong> <%= trip.destination %></p>
+            <p><strong>Start Date:</strong> <%= trip.startDate.toDateString() %></p>
+            <p><strong>End Date:</strong> <%= trip.endDate.toDateString() %></p>
+            <p><strong>Notes:</strong> <%= trip.notes || 'No additional notes provided.' %></p>
+        </div>
+        <div class="trip-actions">
+            <a href="/trips/edit/<%= trip._id %>" class="btn-secondary">Edit Trip</a>
+            <form action="/trips/delete/<%= trip._id %>" method="POST" class="delete-form">
+                <button type="submit" class="btn-danger">Delete Trip</button>
+            </form>
+        </div>
+
+        <!-- Activities Section -->
+        <section class="activities-section">
+            <h3>Activities</h3>
+            <a href="/trips/<%= trip._id %>/activities/add" class="btn-primary">Add Activity</a>
+
+            <% if (!activities || activities.length === 0) { %>
+                <p class="no-activities-message">No activities added yet. Start by adding one!</p>
+            <% } else { %>
+                <ul class="activities-list">
+                    <% activities.forEach(activity => { %>
+                        <li class="activity-item">
+                            <div class="activity-info">
+                                <strong><%= activity.name %></strong>
+                                <p>Date: <%= activity.date.toDateString() %></p>
+                                <p>Time: <%= activity.time %></p>
+                                <p>Location: <%= activity.location || 'Not specified' %></p>
+                                <p>Notes: <%= activity.notes || 'No additional notes.' %></p>
+                            </div>
+                            <div class="activity-actions">
+                                <a href="/activities/edit/<%= activity._id %>" class="btn-secondary">Edit</a>
+                                <form action="/activities/delete/<%= activity._id %>" method="POST" class="delete-form">
+                                    <button type="submit" class="btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </section>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

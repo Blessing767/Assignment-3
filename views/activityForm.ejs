@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+
+<main>
+    <section class="activity-form-container">
+        <h2><%= activity ? "Edit Activity" : "Add New Activity" %></h2>
+        <form 
+            action="<%= activity ? `/activities/edit/${activity._id}` : `/trips/${tripId}/activities/add` %>" 
+            method="POST" 
+            class="activity-form"
+        >
+            <!-- Activity Name -->
+            <div class="form-group">
+                <label for="name">Activity Name</label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    placeholder="Enter activity name" 
+                    value="<%= activity ? activity.name : '' %>" 
+                    required>
+            </div>
+
+            <!-- Date -->
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input 
+                    type="date" 
+                    name="date" 
+                    id="date" 
+                    value="<%= activity ? activity.date.toISOString().split('T')[0] : '' %>" 
+                    required>
+            </div>
+
+            <!-- Time -->
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input 
+                    type="time" 
+                    name="time" 
+                    id="time" 
+                    value="<%= activity ? activity.time : '' %>" 
+                    required>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input 
+                    type="text" 
+                    name="location" 
+                    id="location" 
+                    placeholder="Enter activity location" 
+                    value="<%= activity ? activity.location : '' %>">
+            </div>
+
+            <!-- Notes -->
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea 
+                    name="notes" 
+                    id="notes" 
+                    placeholder="Add any additional notes here"><%= activity ? activity.notes : '' %></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary"><%= activity ? "Update Activity" : "Add Activity" %></button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

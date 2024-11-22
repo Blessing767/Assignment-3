@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<main class="public-trips-container">
+    <h2>Explore Public Trips</h2>
+    <% if (trips.length === 0) { %>
+        <p class="no-trips-message">No trips available to display.</p>
+    <% } else { %>
+        <ul class="trips-list">
+            <% trips.forEach(trip => { %>
+                <li class="trip-item">
+                    <h3><%= trip.title %></h3>
+                    <p><strong>Destination:</strong> <%= trip.destination %></p>
+                    <p><strong>Start Date:</strong> <%= trip.startDate.toDateString() %></p>
+                    <p><strong>End Date:</strong> <%= trip.endDate.toDateString() %></p>
+                    <p><strong>Notes:</strong> <%= trip.notes || 'No notes provided.' %></p>
+                </li>
+            <% }) %>
+        </ul>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>

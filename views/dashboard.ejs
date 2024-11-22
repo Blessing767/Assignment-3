@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<main class="dashboard-container">
+    <a href="/trips/add" class="btn-primary">Add New Trip</a>
+    <section class="trip-list">
+        <% if (trips.length === 0) { %>
+            <p class="no-trips-message">No trips available. Start by adding a new trip!</p>
+        <% } else { %>
+            <% trips.forEach(trip => { %>
+                <div class="trip-card">
+                    <h3><%= trip.title %></h3>
+                    <p><strong>Destination:</strong> <%= trip.destination %></p>
+                    <p><strong>Start Date:</strong> <%= trip.startDate.toDateString() %></p>
+                    <p><strong>End Date:</strong> <%= trip.endDate.toDateString() %></p>
+                    <div class="trip-actions">
+                        <a href="/trips/<%= trip._id %>" class="btn-secondary">View Details</a>
+                        <a href="/trips/edit/<%= trip._id %>" class="btn-secondary">Edit</a>
+                        <form action="/trips/delete/<%= trip._id %>" method="POST" class="delete-form">
+                            <button type="submit" class="btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
