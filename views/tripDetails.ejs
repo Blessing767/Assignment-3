@@ -12,7 +12,7 @@
         </div>
         <div class="trip-actions">
             <a href="/trips/edit/<%= trip._id %>" class="btn-secondary">Edit Trip</a>
-            <form action="/trips/delete/<%= trip._id %>" method="POST" class="delete-form">
+            <form action="/trips/delete/<%= trip._id %>" method="POST" onsubmit="return confirmDelete();">
                 <button type="submit" class="btn-danger">Delete Trip</button>
             </form>
         </div>

@@ -128,15 +128,13 @@ res.status(500).send('Error updating trip');
 
 // Delete a trip and its activities
 exports.deleteTrip = async (req, res) => {
-try {
-const { id } = req.params;
-
-await Trip.findByIdAndDelete(id);
-await Activity.deleteMany({ tripId: id }); // Delete all activities associated with the trip
-
-res.redirect('/dashboard');
-} catch (error) {
-console.error(error.message);
-res.status(500).send('Error deleting trip');
-}
+    try {
+        const tripId = req.params.id; // Get the tripId from the URL
+        await Trip.findByIdAndDelete(tripId); // Delete the trip from the database
+        console.log(`Trip with ID ${tripId} deleted successfully.`);
+        res.redirect('/trips/dashboard'); // Redirect back to the dashboard
+    } catch (error) {
+        console.error("Error deleting trip:", error);
+        res.status(500).send("Error deleting trip.");
+    }
 };
