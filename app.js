@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
+const path = require('path');
+
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false })); // Parse URL-encoded data from forms
 app.use(express.static('public')); // Serve static files (e.g., CSS)
 app.use('/nodemodules', express.static('node_modules'));
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')));
+app.use('/jquery', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist')));
+app.use('/fontawesome', express.static(path.join(__dirname, 'node_modules', '@fortawesome', 'fontawesome-free', 'css')));
+app.use('/webfonts', express.static(path.join(__dirname, 'node_modules', '@fortawesome', 'fontawesome-free', 'webfonts')));
 
 // Routes
 const tripRoutes = require('./routes/tripRoutes');
@@ -46,4 +52,6 @@ app.use((req, res) => {
 
 // Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
