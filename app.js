@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false })); // Parse URL-encoded data from forms
 app.use(express.static('public')); // Serve static files (e.g., CSS)
+app.use('/nodemodules', express.static('node_modules'));
 
 // Routes
 const tripRoutes = require('./routes/tripRoutes');
@@ -36,7 +37,7 @@ app.get('/', (req, res) => {
 // Routes for trips and activities
 app.use('/', tripRoutes);
 app.use('/trips', tripRoutes);
-app.use('/activities', activityRoutes);
+app.use('/trips/:id/activities', activityRoutes);
 
 // Handle 404 errors
 app.use((req, res) => {

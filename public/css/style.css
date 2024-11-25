@@ -105,6 +105,17 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+footer a {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
 /* Dashboard Styles */
 .dashboard-container {
     padding: 20px;
@@ -383,4 +394,77 @@ footer {
     background-color: #ff4d4d;
 }
 
+/* Add/Edit Trip Page */
+.add-edit-trip-container {
+    max-width: 600px; /* Adjusted width for better appearance */
+    margin: 50px auto; /* Center the container with space at the top */
+    padding: 30px;
+    background-color: #222; /* Dark background for professional look */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: left;
+}
 
+.add-edit-trip-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: red; /* Highlight title in red */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.trip-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between input fields */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 15px;
+    font-size: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: red;
+    background-color: #444;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+.btn-primary {
+    padding: 12px;
+    font-size: 16px;
+    color: white;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #ff4d4d;
+}

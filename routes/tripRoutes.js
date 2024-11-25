@@ -1,32 +1,34 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const tripController = require('../controllers/tripController');
+const tripController = require("../controllers/tripController");
 
-// Render the home page
-router.get('/', tripController.renderHomePage);
+// Render the contact page
+router.get("/contact", (req, res) => {
+  res.render("contact");
+});
+
+// Render the dashboard with all trips
+router.get("/dashboard", tripController.getAllTrips);
 
 // Render the public trips page
-router.get('/public', tripController.renderPublicTrips);
-
-// Display the dashboard with all trips
-router.get('/dashboard', tripController.getAllTrips);
-
-// View details of a specific trip
-router.get('/:id', tripController.getTripDetails);
+router.get("/public", tripController.renderPublicTrips);
 
 // Render the form to add a new trip
-router.get('/add', tripController.renderTripForm);
+router.get("/add", tripController.renderTripForm);
 
 // Render the form to edit an existing trip
-router.get('/edit/:id', tripController.renderTripForm);
+router.get("/edit/:id", tripController.renderTripForm);
 
-// Add a new trip
-router.post('/add', tripController.addTrip);
+// View details of a specific trip
+router.get("/:id", tripController.getTripDetails);
 
-// Update an existing trip
-router.post('/edit/:id', tripController.updateTrip);
+// Handle adding a new trip
+router.post("/add", tripController.addTrip);
 
-// Delete a specific trip
-router.post('/delete/:id', tripController.deleteTrip);
+// Handle updating an existing trip
+router.post("/edit/:id", tripController.updateTrip);
+
+// Handle deleting a trip
+router.post("/delete/:id", tripController.deleteTrip);
 
 module.exports = router;

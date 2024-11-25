@@ -21,25 +21,45 @@ res.status(500).send('Error retrieving activities');
 
 // Add a new activity
 exports.addActivity = async (req, res) => {
-try {
-const { id: tripId } = req.params;
-const { name, date, time, location, notes } = req.body;
+    try {
+        const { name, date, time, location, notes } = req.body;
+        const tripId = req.params.id;
 
-const activity = new Activity({
-tripId,
-name,
-date,
-time,
-location,
-notes,
-});
+        if (!tripId) {
+            return res.status(400).send('Trip ID is required to add an activity.');
+        }
 
-await activity.save();
-res.redirect(`/trips/${tripId}`);
-} catch (error) {
-console.error(error.message);
-res.status(500).send('Error adding activity');
-}
+        const newActivity = new Activity({
+            tripId, // Link the activity to the trip
+            name,
+            date,
+            time,
+            location,
+            notes,
+        });
+
+        await newActivity.save();
+        res.redirect(`/trips/${tripId}`); // Redirect back to the trip details page
+    } catch (error) {
+        console.error('Error adding activity:', error.message);
+        res.status(500).send('Error adding activity');
+    }
+};
+exports.renderAddActivityForm = (req, res) => {
+    const tripId = req.params.id; // Retrieve trip ID from URL
+    res.render('addActivity', { tripId }); // Ensure 'addActivity.ejs' exists
+};
+
+
+// render activity form
+exports.renderActivityForm = (req, res) => {
+    const tripId = req.params.id;
+
+    if (!tripId) {
+        return res.status(400).send('Trip ID is required to add an activity.');
+    }
+
+    res.render('activityForm', { activity: null, tripId }); // Render the form with the trip ID
 };
 
 // Edit an activity (form rendering)

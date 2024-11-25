@@ -1,6 +1,5 @@
 const Trip = require('../models/Trip');
 const Activity = require('../models/Activity');
-const mongoose = require('mongoose');
 
 // Render the splash (home) page
 exports.renderHomePage = (req, res) => {
@@ -18,28 +17,23 @@ exports.renderPublicTrips = async (req, res) => {
     }
 };
 
-// Show all trips for the dashboard
+// Show all trips for a user
 exports.getAllTrips = async (req, res) => {
-    try {
-        const trips = await Trip.find(); // Fetch all trips from the database
-        res.render('dashboard', { trips });
-    } catch (error) {
-        console.error('Error fetching trips:', error.message);
-        res.status(500).send('Error retrieving trips');
-    }
+try {
+    console.log('Fetching all trips...'); // Debug log
+    const trips = await Trip.find(); // Fetch all trips from the database
+    console.log('Trips retrieved successfully:', trips); // Debug log
+    res.render('dashboard', { trips });
+} catch (error) {
+console.error(error.message);
+res.status(500).send('Error retrieving trips');
+}
 };
 
 // Show trip details and its activities
 exports.getTripDetails = async (req, res) => {
     try {
-        const { id } = req.params;
-
-        // Validate ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send('Invalid trip ID');
-        }
-
-        const trip = await Trip.findById(id);
+        const trip = await Trip.findById(req.params.id);
         if (!trip) {
             return res.status(404).send('Trip not found');
         }
@@ -57,100 +51,92 @@ exports.getTripDetails = async (req, res) => {
 // Render Add/Edit Trip Form
 exports.renderTripForm = async (req, res) => {
     try {
-        const { id } = req.params;
+        const tripId = req.params.id;
 
-        // Check if the route is for editing a trip
-        if (id) {
-            // Validate ObjectId for edit route
-            if (!mongoose.Types.ObjectId.isValid(id)) {
-                return res.status(400).send('Invalid trip ID');
-            }
-
-            // Fetch the trip for editing
-            const trip = await Trip.findById(id);
-            if (!trip) {
-                return res.status(404).send('Trip not found');
-            }
-            return res.render('addEditTrip', { trip });
+        // If `tripId` is "add", do NOT fetch anything; just render an empty form
+        if (tripId === "add" || !tripId) {
+            console.log('Rendering blank form for adding a new trip');
+            return res.render('addEditTrip', { trip: null });
         }
 
-        // If no ID is provided, render the form for adding a new trip
-        res.render('addEditTrip', { trip: null });
+        // Otherwise, try to fetch the trip for editing
+        const trip = await Trip.findById(tripId);
+        if (!trip) {
+            return res.status(404).send('Trip not found');
+        }
+
+        res.render('addEditTrip', { trip }); // Render form for editing
     } catch (error) {
         console.error('Error rendering trip form:', error.message);
-        res.status(500).send('Error rendering trip form');
+        res.status(500).send('Error fetching trip details');
     }
 };
 
+
 // Add a new trip
 exports.addTrip = async (req, res) => {
-    try {
-        const { title, destination, startDate, endDate, notes } = req.body;
+try {
+    console.log('Trip data received:', req.body); // Debug: Log the request body
+    const { title, destination, startDate, endDate, notes } = req.body;
 
-        // Ensure required fields are present
-        if (!title || !destination || !startDate || !endDate) {
-            return res.status(400).send('Missing required fields');
-        }
-
-        // Create and save a new trip
-        const newTrip = new Trip({
-            title,
-            destination,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            notes,
-        });
-
-        await newTrip.save();
-        res.redirect('/dashboard');
-    } catch (error) {
-        console.error('Error adding trip:', error.message);
-        res.status(500).send('Error adding trip');
+    // Ensure required fields are present
+    if (!title || !destination || !startDate || !endDate) {
+        console.error('Missing required fields'); // Debug
+        return res.status(400).send('Missing required fields');
     }
+
+    // Create and save a new trip
+    const newTrip = new Trip({
+        title,
+        destination,
+        startDate: new Date(startDate), // Convert to Date object
+        endDate: new Date(endDate),     // Convert to Date object
+        notes,
+    });
+
+    await newTrip.save();
+    console.log('Trip added successfully:', newTrip); // Debug
+
+    // Redirect to the dashboard
+    res.redirect('/trips/dashboard');
+} catch (error) {
+    console.error('Error adding trip:', error.message); // Log the error
+    res.status(500).send('Error adding trip');
+}
 };
 
 // Update an existing trip
 exports.updateTrip = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { title, destination, startDate, endDate, notes } = req.body;
+try {
+const { id } = req.params;
+const { title, destination, startDate, endDate, notes } = req.body;
 
-        // Validate ObjectId for update
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send('Invalid trip ID');
-        }
+await Trip.findByIdAndUpdate(id, {
+title,
+destination,
+startDate,
+endDate,
+notes,
+});
 
-        await Trip.findByIdAndUpdate(id, {
-            title,
-            destination,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            notes,
-        });
-
-        res.redirect('/dashboard');
-    } catch (error) {
-        console.error('Error updating trip:', error.message);
-        res.status(500).send('Error updating trip');
-    }
+res.redirect('/dashboard');
+} catch (error) {
+console.error(error.message);
+res.status(500).send('Error updating trip');
+}
 };
 
 // Delete a trip and its activities
 exports.deleteTrip = async (req, res) => {
-    try {
-        const { id } = req.params;
+try {
+const { id } = req.params;
 
-        // Validate ObjectId for delete
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send('Invalid trip ID');
-        }
+await Trip.findByIdAndDelete(id);
+await Activity.deleteMany({ tripId: id }); // Delete all activities associated with the trip
 
-        await Trip.findByIdAndDelete(id);
-        await Activity.deleteMany({ tripId: id }); // Delete all activities associated with the trip
-
-        res.redirect('/dashboard');
-    } catch (error) {
-        console.error('Error deleting trip:', error.message);
-        res.status(500).send('Error deleting trip');
-    }
+res.redirect('/dashboard');
+} catch (error) {
+console.error(error.message);
+res.status(500).send('Error deleting trip');
+}
 };
