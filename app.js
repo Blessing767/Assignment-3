@@ -16,6 +16,7 @@ const app = express();
 
 // Middleware
 app.set('view engine', 'ejs'); // Set EJS as the template engine
+app.set('views', path.join(__dirname, 'views')); // Set views directory
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false })); // Parse URL-encoded data from forms
