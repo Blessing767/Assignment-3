@@ -4,7 +4,6 @@ const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-
 // Load environment variables
 require('dotenv').config();
 const mongoose = require('mongoose');
@@ -37,7 +36,6 @@ app.use('/webfonts', express.static(path.join(__dirname, 'node_modules', '@forta
 // Routes
 const tripRoutes = require('./routes/tripRoutes');
 const activityRoutes = require('./routes/activityRoutes');
-
 // to home
 app.get('/', (req, res) => {
     res.render('home');
