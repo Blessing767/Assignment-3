@@ -7,15 +7,16 @@ const conn = require('./dbc.js')
 // Load environment variables
 require('dotenv').config();
 const mongoose = require('mongoose');
-
-// MongoDB connection
-mongoose.connect(conn.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch((err) => console.error('MongoDB connection error:', err));
-
-
-// Connect to MongoDB
-connectDB();
+// point my mongoose to the URI
+mongoose.connect(conn.MONGO_URI);
+let mongoDB = mongoose.connection;
+mongoDB.on('error',console.error.bind(console,'Connection Error'))
+mongoDB.once('open',()=>{
+  console.log('MongoDB Connected')
+})
+mongoose.connect(conn.MONGO_URI,{useNewURIParser:true,
+  useUnifiedTopology:true
+})
 
 // Initialize Express app
 const app = express();
